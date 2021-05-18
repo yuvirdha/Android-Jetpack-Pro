@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Movie Catalogue</string>
+    <string name="title">Title</string>
+    <string name="detail">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque semper sapien ac commodo. Nunc justo felis, vehicula et mauris in, efficitur elementum risus. Integer maximus ante sit amet lorem fermentum, vel bibendum nisi sollicitudin.</string>
+    <string name="nav_movie">Movies</string>
+    <string name="nav_tv_show">TV Shows</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_movie_nav">Movies</string>
+    <string name="title_tv_show">TV Shows</string>
+    <string name="genre">Genre</string>
+    <string name="year">Year</string>
+    <string name="tab_movie">MOVIES</string>
+    <string name="tab_tv_show">TV SHOWS</string>
+    <string name="title_load">Title</string>
+    <string name="year_load">Year</string>
+    <string name="genre_load">Genre</string>
+    <string name="favorite">fav_icon</string>
+    <string name="tab_fav_movie">MOVIE</string>
+    <string name="tab_fav_tv_show">TV SHOW</string>
+    <string name="menu_bookmark">menu</string>
+    <string name="message_undo">Item is deleted</string>
+    <string name="message_done">OK</string>
+</resources>
