@@ -1,6 +1,8 @@
 package com.example.yuvirdhajetpacksubmission1.movie
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,12 +18,12 @@ import com.example.yuvirdhajetpacksubmission1.vo.Status
 class MovieFragment : Fragment() {
 
     private var _binding: FragmentMovieBinding? = null
-    private val binding get() = _binding
+    private val movieBinding get() = _binding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): ConstraintLayout? {
 
         _binding = FragmentMovieBinding.inflate(layoutInflater, container, false)
-        return binding?.root
+        return movieBinding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,24 +39,27 @@ class MovieFragment : Fragment() {
             viewModel.getMovieData().observe(this, { movies ->
                 if (movies != null) {
                     when (movies.status) {
-                        Status.LOADING -> binding?.progressBar?.visibility = View.VISIBLE
+                        Status.LOADING -> movieBinding?.progressBar?.visibility = View.VISIBLE
                         Status.SUCCESS -> {
-                            binding?.progressBar?.visibility = View.GONE
+                            movieBinding?.progressBar?.visibility = View.GONE
                             movieAdapter.submitList(movies.data)
+                            Log.d(TAG,"test: " + movies.data)
                         }
                         Status.ERROR -> {
-                            binding?.progressBar?.visibility = View.GONE
+                            movieBinding?.progressBar?.visibility = View.GONE
                             Toast.makeText(context, "Terjadi kesalahan", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
+                Log.d(TAG,"entered here: " + movies.data)
             })
 
 
-            with(binding?.rvMovie) {
+            with(movieBinding?.rvMovie) {
                 this?.layoutManager = LinearLayoutManager(context)
-                this?.setHasFixedSize(true)
+                //this?.setHasFixedSize(true)
                 this?.adapter = movieAdapter
+                Log.d(TAG, "recyclerView: $movieAdapter")
             }
         }
     }

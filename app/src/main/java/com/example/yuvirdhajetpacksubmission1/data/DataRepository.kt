@@ -1,5 +1,6 @@
 package com.example.yuvirdhajetpacksubmission1.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -53,16 +54,20 @@ class DataRepository private constructor(private val remoteDataSource: RemoteDat
             public override fun saveCallResult(data: List<DataMovieEntityResponse>) {
                 val movieList = ArrayList<DataMovieEntity>()
                 for (response in data) {
-                    val data = DataMovieEntity(
-                            response.title,
-                            response.year,
-                            response.genre,
-                            response.detail,
-                            response.poster,
-                    false)
-                    movieList.add(data)
+                    val movie = DataMovieEntity(
+                        response.title,
+                        response.year,
+                        response.genre,
+                        response.detail,
+                        response.poster,
+                        false
+                    )
+                    println("ini judul" + movie.title)
+                    movieList.add(movie)
                 }
+
                 localDataSource.insertMovies(movieList)
+                Log.e("DataRepository", "saveCallResult")
             }
         }.asLiveData()
     }
@@ -87,14 +92,14 @@ class DataRepository private constructor(private val remoteDataSource: RemoteDat
             public override fun saveCallResult(data: List<DataTvShowEntityResponse>) {
                 val tvShowsList = ArrayList<DataTvShowEntity>()
                 for (response in data) {
-                    val data = DataTvShowEntity(
+                    val tvShow = DataTvShowEntity(
                         response.title,
                         response.year,
                         response.genre,
                         response.detail,
                         response.poster,
                         false)
-                    tvShowsList.add(data)
+                    tvShowsList.add(tvShow)
                 }
                 localDataSource.insertTvShows(tvShowsList)
             }

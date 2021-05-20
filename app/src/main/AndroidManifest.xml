@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.YuvirdhaJetpackSubmission1"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".favorite.FavoriteActivity"></activity>
+        <activity android:name=".favorite.FavoriteActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".detail.MovieDetailActivity" />
         <activity android:name=".detail.TvShowDetailActivity" />

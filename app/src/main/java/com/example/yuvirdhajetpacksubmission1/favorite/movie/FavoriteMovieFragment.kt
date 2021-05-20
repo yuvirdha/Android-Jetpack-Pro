@@ -1,6 +1,9 @@
 package com.example.yuvirdhajetpacksubmission1.favorite.movie
 
+import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,12 +25,9 @@ class FavoriteMovieFragment : Fragment() {
     private lateinit var viewModel: FavoriteMovieViewModel
     private lateinit var adapter: FavoriteMovieAdapter
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        _binding = FragmentFavoriteMovieBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoriteMovieBinding.inflate(layoutInflater, container, false)
         return binding?.root
     }
 
@@ -46,10 +46,11 @@ class FavoriteMovieFragment : Fragment() {
             viewModel.getFavMovie().observe(this, { movie ->
                 binding?.progressBar?.visibility = View.GONE
                 adapter.submitList(movie)
+                Log.d(TAG, "check fav movie: $movie")
             })
 
             binding?.rvFavMovie?.layoutManager = LinearLayoutManager(context)
-            binding?.rvFavMovie?.setHasFixedSize(true)
+            //binding?.rvFavMovie?.setHasFixedSize(true)
             binding?.rvFavMovie?.adapter = adapter
         }
     }

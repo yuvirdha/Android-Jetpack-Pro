@@ -3,21 +3,26 @@ package com.example.yuvirdhajetpacksubmission1.detail
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.example.yuvirdhajetpacksubmission1.data.source.local.entity.DataMovieEntity
 import com.example.yuvirdhajetpacksubmission1.data.DataRepository
+import com.example.yuvirdhajetpacksubmission1.data.source.local.entity.DataMovieDetailEntity
+import com.example.yuvirdhajetpacksubmission1.data.source.local.entity.DataTvShowDetailEntity
+import com.example.yuvirdhajetpacksubmission1.utils.MyDummy
+import com.example.yuvirdhajetpacksubmission1.vo.Resource
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
-import com.example.yuvirdhajetpacksubmission1.utils.MyDummy
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNotNull
 
 @RunWith(MockitoJUnitRunner::class)
-class DetailViewModelTest{
+class DetailViewModelTest {
+
+    @get:Rule
+    var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     //deklarasi model
     private lateinit var viewModel: DetailViewModel
@@ -26,62 +31,93 @@ class DetailViewModelTest{
     private val detailTvShow = MyDummy.generateDummyTvShows()[0]
 
     // inisialisasi title
-    private val title = detailMovie.title + detailTvShow
+    private val movieTitle = detailMovie.title
+    private val tvTitle = detailTvShow.title
 
-    @get:Rule
-    var instantTaskExecutorRule = InstantTaskExecutorRule()
     @Mock
     private lateinit var repo: DataRepository
+
     @Mock
-    private lateinit var movieObserver: Observer<DataMovieEntity>
+    private lateinit var movieObserver: Observer<Resource<DataMovieDetailEntity>>
+
     @Mock
-    private lateinit var tvShowObserver: Observer<DataMovieEntity>
+    private lateinit var tvShowObserver: Observer<Resource<DataTvShowDetailEntity>>
 
     @Before
     fun setUp() {
         viewModel = DetailViewModel(repo)
-        viewModel.setContentByTitle(title)
+        viewModel.setContentByMovieTitle(movieTitle)
+        viewModel.setContentByTvShowTitle(tvTitle)
     }
 
     @Test
-    fun testMovieDetail() {
-        val liveDataMovie = MutableLiveData<DataMovieEntity>()
-        liveDataMovie.value = detailMovie
+    fun `setContentByMovieTitle should be success`() {
+        val expected = MutableLiveData<Resource<DataMovieDetailEntity>>()
+        expected.value = Resource.success(MyDummy.generateDetailFavMovies(detailMovie, true))
 
-        Mockito.`when`(repo.generateDetailMovies(title)).thenReturn(liveDataMovie)
-        val dataEntity = viewModel.getMoviesDetail().value as DataMovieEntity
+        Mockito.`when`(repo.generateDetailMovies(movieTitle)).thenReturn(expected)
 
-        Mockito.verify(repo).generateDetailMovies(title)
+        viewModel.dataDetailEntityMovie.observeForever(movieObserver)
 
-        assertNotNull(dataEntity)
-        assertEquals(detailMovie.title, dataEntity.title)
-        assertEquals(detailMovie.year, dataEntity.year)
-        assertEquals(detailMovie.genre, dataEntity.genre)
-        assertEquals(detailMovie.detail, dataEntity.detail)
-        assertEquals(detailMovie.poster, dataEntity.poster)
+        Mockito.verify(movieObserver).onChanged(expected.value)
 
-        viewModel.getMoviesDetail().observeForever(movieObserver)
-        Mockito.verify(movieObserver).onChanged(detailMovie)
+        val expectedValue = expected.value
+        val actualValue = viewModel.dataDetailEntityMovie.value
+
+        assertEquals(expectedValue, actualValue)
     }
 
     @Test
-    fun testTvShowDetail() {
-        val liveDataTvShow = MutableLiveData<DataMovieEntity>()
-        liveDataTvShow.value = detailTvShow
+    fun `setContentByTvShowTitle should be success`() {
+        val expected = MutableLiveData<Resource<DataTvShowDetailEntity>>()
+        expected.value = Resource.success(MyDummy.generateDetailFavTvShows(detailTvShow, true))
 
-        Mockito.`when`(repo.generateDetailTvShows(title)).thenReturn(liveDataTvShow)
-        val dataEntity = viewModel.getTvShowsDetail().value as DataMovieEntity
+        Mockito.`when`(repo.generateDetailTvShows(tvTitle)).thenReturn(expected)
 
-        Mockito.verify(repo).generateDetailTvShows(title)
+        viewModel.dataDetailEntityTvShow.observeForever(tvShowObserver)
 
-        assertNotNull(dataEntity)
-        assertEquals(detailTvShow.title, dataEntity.title)
-        assertEquals(detailTvShow.year, dataEntity.year)
-        assertEquals(detailTvShow.genre, dataEntity.genre)
-        assertEquals(detailTvShow.detail, dataEntity.detail)
-        assertEquals(detailTvShow.poster, dataEntity.poster)
+        Mockito.verify(tvShowObserver).onChanged(expected.value)
 
-        viewModel.getTvShowsDetail().observeForever(tvShowObserver)
-        Mockito.verify(tvShowObserver).onChanged(detailTvShow)
+        val expectedValue = expected.value
+        val actualValue = viewModel.dataDetailEntityTvShow.value
+
+        assertEquals(expectedValue, actualValue)
     }
+
+    @Test
+    fun `setMovieIsFav should be success trigger dataDetailEntityMovie observer`() {
+        val expected = MutableLiveData<Resource<DataMovieDetailEntity>>()
+        expected.value = Resource.success(MyDummy.generateDetailFavMovies(detailMovie, true))
+
+        Mockito.`when`(repo.generateDetailMovies(movieTitle)).thenReturn(expected)
+
+        viewModel.setMovieIsFav()
+        viewModel.dataDetailEntityMovie.observeForever(movieObserver)
+
+        Mockito.verify(movieObserver).onChanged(expected.value)
+
+        val expectedValue = expected.value
+        val actualValue = viewModel.dataDetailEntityMovie.value
+
+        assertEquals(expectedValue, actualValue)
+    }
+
+    @Test
+    fun `setTvShowIsFav should be success trigger dataDetailEntityTvShow observer`() {
+        val expected = MutableLiveData<Resource<DataTvShowDetailEntity>>()
+        expected.value = Resource.success(MyDummy.generateDetailFavTvShows(detailTvShow, true))
+
+        Mockito.`when`(repo.generateDetailTvShows(tvTitle)).thenReturn(expected)
+
+        viewModel.setTvShowIsFav()
+        viewModel.dataDetailEntityTvShow.observeForever(tvShowObserver)
+
+        Mockito.verify(tvShowObserver).onChanged(expected.value)
+
+        val expectedValue = expected.value
+        val actualValue = viewModel.dataDetailEntityTvShow.value
+
+        assertEquals(expectedValue, actualValue)
+    }
+
 }

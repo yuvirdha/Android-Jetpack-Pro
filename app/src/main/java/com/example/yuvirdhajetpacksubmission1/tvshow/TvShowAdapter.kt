@@ -22,7 +22,7 @@ class TvShowAdapter : PagedListAdapter<DataTvShowEntity, TvShowAdapter.TvShowVie
             }
 
             override fun areContentsTheSame(oldItem: DataTvShowEntity, newItem: DataTvShowEntity): Boolean {
-                return oldItem == newItem
+                return oldItem.title == newItem.title
             }
         }
     }
@@ -45,7 +45,6 @@ class TvShowAdapter : PagedListAdapter<DataTvShowEntity, TvShowAdapter.TvShowVie
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, TvShowDetailActivity::class.java)
                     intent.putExtra(TvShowDetailActivity.EXTRA_TV_SHOW, dataMovie.title)
-                    //intent.putExtra(DetailActivity.EXTRA_TITLE, DetailActivity.EXTRA_DATA_TV_SHOW)
                     itemView.context.startActivity(intent)
                 }
                 Glide.with(itemView.context)

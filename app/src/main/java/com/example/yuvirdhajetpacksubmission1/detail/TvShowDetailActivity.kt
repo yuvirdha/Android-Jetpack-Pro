@@ -44,7 +44,7 @@ class TvShowDetailActivity : AppCompatActivity() {
         if (extras != null) {
             val title = extras.getString(EXTRA_TV_SHOW)
             if (title != null) {
-                viewModel.setContentByTitle(title)
+                viewModel.setContentByTvShowTitle(title)
                 viewModel.dataDetailEntityTvShow.observe(this, { tvShows ->
                     if (tvShows != null) {
                         when (tvShows.status) {

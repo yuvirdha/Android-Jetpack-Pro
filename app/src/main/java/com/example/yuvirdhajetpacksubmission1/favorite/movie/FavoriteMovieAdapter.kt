@@ -28,8 +28,8 @@ class FavoriteMovieAdapter: PagedListAdapter<DataMovieEntity, FavoriteMovieAdapt
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteMovieViewHolder {
-        val itemListBinding = ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return FavoriteMovieViewHolder(itemListBinding)
+        val myBinding = ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return FavoriteMovieViewHolder(myBinding)
     }
 
     override fun onBindViewHolder(holder: FavoriteMovieViewHolder, position: Int) {

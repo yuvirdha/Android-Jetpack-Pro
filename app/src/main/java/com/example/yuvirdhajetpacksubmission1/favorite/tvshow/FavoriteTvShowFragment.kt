@@ -50,7 +50,7 @@ class FavoriteTvShowFragment : Fragment() {
             })
 
             binding?.rvFavTvShow?.layoutManager = LinearLayoutManager(context)
-            binding?.rvFavTvShow?.setHasFixedSize(true)
+            //binding?.rvFavTvShow?.setHasFixedSize(true)
             binding?.rvFavTvShow?.adapter = adapter
         }
     }

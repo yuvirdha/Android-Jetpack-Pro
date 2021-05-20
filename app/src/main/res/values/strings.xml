@@ -20,5 +20,5 @@
     <string name="tab_fav_tv_show">TV SHOW</string>
     <string name="menu_bookmark">menu</string>
     <string name="message_undo">Item is deleted</string>
-    <string name="message_done">OK</string>
+    <string name="message_done">Undo</string>
 </resources>

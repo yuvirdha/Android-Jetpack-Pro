@@ -60,7 +60,7 @@ class TvShowFragment : Fragment() {
 
             with(binding?.rvTvShows) {
                 this?.layoutManager = LinearLayoutManager(context)
-                this?.setHasFixedSize(true)
+                //this?.setHasFixedSize(true)
                 this?.adapter = tvShowAdapter
             }
         }

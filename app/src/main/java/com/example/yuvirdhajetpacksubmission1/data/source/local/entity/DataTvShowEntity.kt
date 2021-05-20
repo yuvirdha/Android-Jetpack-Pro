@@ -11,7 +11,7 @@ data class DataTvShowEntity(
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "title")
-    var title: String,
+    val title: String,
 
     @ColumnInfo(name = "year")
     var year: String,

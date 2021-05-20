@@ -11,19 +11,24 @@ import com.example.yuvirdhajetpacksubmission1.vo.Resource
 
 class DetailViewModel(private val repository: DataRepository) : ViewModel() {
 
-    val title = MutableLiveData<String>()
+    val movieTitle = MutableLiveData<String>()
+    val tvTitle = MutableLiveData<String>()
 
-    fun setContentByTitle(title: String) {
-        this.title.value = title
+    fun setContentByMovieTitle(movieTitle: String) {
+        this.movieTitle.value = movieTitle
+    }
+
+    fun setContentByTvShowTitle(tvTitle: String) {
+        this.tvTitle.value = tvTitle
     }
 
     // Metode  Transformations.switchMap digunakan untuk mengambil data setiap kali courseId-nya berubah.
 
-    var dataDetailEntityMovie: LiveData<Resource<DataMovieDetailEntity>> = Transformations.switchMap(title) { mTitleMovie ->
+    var dataDetailEntityMovie: LiveData<Resource<DataMovieDetailEntity>> = Transformations.switchMap(movieTitle) { mTitleMovie ->
         repository.generateDetailMovies(mTitleMovie)
     }
 
-    var dataDetailEntityTvShow: LiveData<Resource<DataTvShowDetailEntity>> = Transformations.switchMap(title) { mTitleTvShow ->
+    var dataDetailEntityTvShow: LiveData<Resource<DataTvShowDetailEntity>> = Transformations.switchMap(tvTitle) { mTitleTvShow ->
         repository.generateDetailTvShows(mTitleTvShow)
     }
 

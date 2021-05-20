@@ -1,6 +1,8 @@
 package com.example.yuvirdhajetpacksubmission1.movie
 
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
@@ -20,40 +22,43 @@ class MovieAdapter : PagedListAdapter<DataMovieEntity, MovieAdapter.MovieViewHol
             override fun areItemsTheSame(oldItem: DataMovieEntity, newItem: DataMovieEntity): Boolean {
                 return oldItem.title == newItem.title
             }
+
             override fun areContentsTheSame(oldItem: DataMovieEntity, newItem: DataMovieEntity): Boolean {
-                return oldItem == newItem
+                return oldItem.title == newItem.title
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val binding = ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MovieViewHolder(binding)
+        val movieBinding = ItemListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MovieViewHolder(movieBinding)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = getItem(position)
-        if (movie != null) {
-            holder.bind(movie)
-        }
+        val movies = getItem(position)
+        if (movies != null)
+            holder.bind(movies)
+        Log.d(TAG, "test binding: " + getItem(position))
     }
 
-    class MovieViewHolder(private val binding: ItemListBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(dataMovie: DataMovieEntity) {
+    class MovieViewHolder(private val binding: ItemListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(dataMovies: DataMovieEntity) {
             with(binding) {
-                tvTitle.text = dataMovie.title
-                tvDetail.text = dataMovie.detail
+                Log.d(TAG, "Coba fun bind")
+                tvTitle.text = dataMovies.title
+                tvDetail.text = dataMovies.detail
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, MovieDetailActivity::class.java).apply {
-                        putExtra(MovieDetailActivity.EXTRA_TITLE, dataMovie.title)
+                        putExtra(MovieDetailActivity.EXTRA_TITLE, dataMovies.title)
                     }
                     it.context.startActivity(intent)
                 }
                 Glide.with(itemView.context)
-                        .load(dataMovie.poster)
-                        .apply(RequestOptions.placeholderOf(R.drawable.ic_loading)
-                                .error(R.drawable.ic_error))
-                        .into(myposter)
+                    .load(dataMovies.poster)
+                    .apply(RequestOptions().override(120, 150))
+                    .into(myposter)
             }
         }
     }

@@ -3,13 +3,15 @@ package com.example.yuvirdhajetpacksubmission1
 import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
-import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.*
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.example.yuvirdhajetpacksubmission1.utils.EspressoIdlingResource
 import com.example.yuvirdhajetpacksubmission1.utils.MyDummy
+import org.hamcrest.CoreMatchers.allOf
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -37,26 +39,26 @@ class HomeActivityTest{
     fun loadTabMovieTvShow() {
 
         //load tab movie
-        Espresso.onView(withId(R.id.rv_movie))
+        onView(withId(R.id.rv_movie))
             .check(matches(isDisplayed()))
-        Espresso.onView(withId(R.id.rv_movie))
+        onView(withId(R.id.rv_movie))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
                 dummyMovies.size)
             )
 
         //click tab tv show
-        Espresso.onView(withText("TV SHOWS")).perform(ViewActions.click())
+        onView(withText("TV SHOWS")).perform(click())
 
         //load tab tv show
-        Espresso.onView(withId(R.id.rv_tv_shows))
+        onView(withId(R.id.rv_tv_shows))
             .check(matches(isDisplayed()))
-        Espresso.onView(withId(R.id.rv_tv_shows))
+        onView(withId(R.id.rv_tv_shows))
             .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(
                 dummyTvShows.size)
             )
 
         //back to tab movie
-        Espresso.onView(withText("MOVIES")).perform(ViewActions.click())
+        onView(withText("MOVIES")).perform(click())
     }
 
     @Test
@@ -64,46 +66,46 @@ class HomeActivityTest{
 
         //click tab movie
 
-        Espresso.onView(withText("MOVIES")).perform(ViewActions.click())
+        onView(withText("MOVIES")).perform(click())
 
         //test scroll recyclerview movie
 
-        Espresso.onView(withId(R.id.rv_movie))
+        onView(withId(R.id.rv_movie))
             .check(matches(isDisplayed()))
-        Espresso.onView(withId(R.id.rv_movie))
-            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(9))
-        Espresso.onView(withId(R.id.rv_movie))
-            .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(9, ViewActions.click()))
+        onView(withId(R.id.rv_movie))
+            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(3))
+        onView(withId(R.id.rv_movie))
+            .perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(3, click()))
 
 
         //load movie detail
 
-        Espresso.onView(withId(R.id.tvTitle))
+        onView(withId(R.id.tvTitle))
             .check(matches(isDisplayed()))
 
-        Espresso.onView(withId(R.id.tvYear))
+        onView(withId(R.id.tvYear))
             .check(matches(isDisplayed()))
 
-        Espresso.onView(withId(R.id.tvGenre))
+        onView(withId(R.id.tvGenre))
             .check(matches(isDisplayed()))
 
-        Espresso.onView(withId(R.id.tvDetail))
+        onView(withId(R.id.tvDetail))
             .check(matches(isDisplayed()))
 
-        Espresso.onView(withId(R.id.img_poster))
+        onView(withId(R.id.img_poster))
             .check(matches(isDisplayed()))
 
-        Espresso.onView(withId(R.id.tvTitle))
-            .check(matches(withText(dummyMovies[9].title)))
+        onView(withId(R.id.tvTitle))
+            .check(matches(withText(dummyMovies[3].title)))
 
-        Espresso.onView(withId(R.id.tvYear))
-            .check(matches(withText(dummyMovies[9].year)))
+        onView(withId(R.id.tvYear))
+            .check(matches(withText(dummyMovies[3].year)))
 
-        Espresso.onView(withId(R.id.tvGenre))
-            .check(matches(withText(dummyMovies[9].genre)))
+        onView(withId(R.id.tvGenre))
+            .check(matches(withText(dummyMovies[3].genre)))
 
-        Espresso.onView(withId(R.id.tvDetail))
-            .check(matches(withText(dummyMovies[9].detail)))
+        onView(withId(R.id.tvDetail))
+            .check(matches(withText(dummyMovies[3].detail)))
 
         //back to home
 
@@ -115,52 +117,85 @@ class HomeActivityTest{
 
         //click tab tv show
 
-        Espresso.onView(withText("TV SHOWS")).perform(ViewActions.click())
+        onView(withText("TV SHOWS")).perform(click())
 
         //test scroll recyclerview tv show
 
-        Espresso.onView(withId(R.id.rv_tv_shows))
+        onView(withId(R.id.rv_tv_shows))
             .check(matches(isDisplayed()))
-        Espresso.onView(withId(R.id.rv_tv_shows))
-            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(9))
-        Espresso.onView(withId(R.id.rv_tv_shows))
+        onView(withId(R.id.rv_tv_shows))
+            .perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(3))
+        onView(withId(R.id.rv_tv_shows))
             .perform(
                 RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
-                    9,
-                    ViewActions.click()
+                    3,
+                    click()
                 )
             )
 
         //load detail tv show
 
-        Espresso.onView(withId(R.id.tvTitle))
+        onView(withId(R.id.tvTitle))
             .check(matches(isDisplayed()))
 
-        Espresso.onView(withId(R.id.tvYear))
+        onView(withId(R.id.tvYear))
             .check(matches(isDisplayed()))
 
-        Espresso.onView(withId(R.id.tvGenre))
+        onView(withId(R.id.tvGenre))
             .check(matches(isDisplayed()))
 
-        Espresso.onView(withId(R.id.tvDetail))
+        onView(withId(R.id.tvDetail))
             .check(matches(isDisplayed()))
 
-        Espresso.onView(withId(R.id.img_poster))
+        onView(withId(R.id.img_poster))
             .check(matches(isDisplayed()))
 
-        Espresso.onView(withId(R.id.tvTitle))
-            .check(matches(withText(dummyTvShows[9].title)))
+        onView(withId(R.id.tvTitle))
+            .check(matches(withText(dummyTvShows[3].title)))
 
-        Espresso.onView(withId(R.id.tvYear))
-            .check(matches(withText(dummyTvShows[9].year)))
+        onView(withId(R.id.tvYear))
+            .check(matches(withText(dummyTvShows[3].year)))
 
-        Espresso.onView(withId(R.id.tvGenre))
-            .check(matches(withText(dummyTvShows[9].genre)))
+        onView(withId(R.id.tvGenre))
+            .check(matches(withText(dummyTvShows[3].genre)))
 
-        Espresso.onView(withId(R.id.tvDetail))
-            .check(matches(withText(dummyTvShows[9].detail)))
+        onView(withId(R.id.tvDetail))
+            .check(matches(withText(dummyTvShows[3].detail)))
 
         // back to home
         Espresso.pressBack()
+    }
+
+
+    @Test
+    fun loadFavMovies(){
+        onView(withId(R.id.rv_movie)).perform(
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, doubleClick())
+        )
+        onView(withId(R.id.action_bookmark)).perform(click())
+        onView(isRoot()).perform(pressBack())
+
+        onView(withId(R.id.favorite)).perform(click())
+        onView(allOf(withId(R.id.rv_fav_movie), isDisplayed()))
+        onView(allOf(withId(R.id.rv_fav_movie))).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(0))
+        onView(withId(R.id.rv_fav_movie)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, doubleClick()))
+        onView(withId(R.id.action_bookmark)).perform(click())
+        onView(isRoot()).perform(pressBack())
+    }
+
+    @Test
+    fun loadFavoriteTvShows(){
+        onView(allOf(withId(R.id.rv_movie), isDisplayed())).perform(swipeLeft())
+        onView(allOf(withId(R.id.rv_tv_shows), isDisplayed()))
+        onView(withId(R.id.rv_tv_shows)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, doubleClick()))
+        onView(withId(R.id.action_bookmark)).perform(click())
+        onView(isRoot()).perform(pressBack())
+
+        onView(withId(R.id.favorite)).perform(click())
+        onView(withText("TV SHOW")).perform(click())
+        onView(allOf(withId(R.id.rv_fav_tv_show))).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(dummyTvShows.size))
+        onView(withId(R.id.rv_fav_tv_show)).perform(RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, doubleClick()))
+        onView(withId(R.id.action_bookmark)).perform(click())
+        onView(isRoot()).perform(pressBack())
     }
 }

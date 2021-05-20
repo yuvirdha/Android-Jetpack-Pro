@@ -43,7 +43,7 @@ class MovieDetailActivity : AppCompatActivity() {
         if (extras != null) {
             val title = extras.getString(EXTRA_TITLE)
             if (title != null) {
-                viewModel.setContentByTitle(title)
+                viewModel.setContentByMovieTitle(title)
                 viewModel.dataDetailEntityMovie.observe(this, { movies ->
                     if (movies != null) {
                         when (movies.status) {

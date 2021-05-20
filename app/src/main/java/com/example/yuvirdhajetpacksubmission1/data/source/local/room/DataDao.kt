@@ -2,12 +2,7 @@ package com.example.yuvirdhajetpacksubmission1.data.source.local.room
 
 import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Transaction
-import androidx.room.Update
+import androidx.room.*
 import com.example.yuvirdhajetpacksubmission1.data.source.local.entity.DataMovieEntity
 import com.example.yuvirdhajetpacksubmission1.data.source.local.entity.DataMovieDetailEntity
 import com.example.yuvirdhajetpacksubmission1.data.source.local.entity.DataTvShowDetailEntity
